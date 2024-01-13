@@ -3,26 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorteio</title>
+    <title>Sistema de Sorteio Online</title>
 </head>
 <body>
-    <form action="processar_sorteio.php" method="post">
-        <label for="quantidade_numeros">Quantidade de Números:</label>
-        <input type="number" name="quantidade_numeros" required>
 
-        <br>
+    <h1>Sistema de Sorteio Online</h1>
 
-        <label for="nome_comprador">Nome do Comprador:</label>
-        <input type="text" name="nome_comprador" required>
+    <form id="sorteioForm">
+        <label for="quantidadeNumeros">Quantidade de Números:</label>
+        <input type="number" id="quantidadeNumeros" name="quantidadeNumeros" min="1" required>
 
-        <br>
+        <label for="nomeComprador">Nome do Comprador:</label>
+        <input type="text" id="nomeComprador" name="nomeComprador" required>
 
-        <label for="nome_vendedor">Nome do Vendedor:</label>
-        <input type="text" name="nome_vendedor" required>
+        <label for="nomeVendedor">Nome do Vendedor:</label>
+        <input type="text" id="nomeVendedor" name="nomeVendedor" required>
 
-        <br>
-
-        <input type="submit" value="Realizar Sorteio">
+        <button type="button" onclick="realizarSorteio()">Realizar Sorteio</button>
     </form>
+
+    <script>
+        function realizarSorteio() {
+            var quantidadeNumeros = document.getElementById('quantidadeNumeros').value;
+            var nomeComprador = document.getElementById('nomeComprador').value;
+            var nomeVendedor = document.getElementById('nomeVendedor').value;
+
+            var numerosSorteados = [];
+
+            for (var i = 0; i < quantidadeNumeros; i++) {
+                do {
+                    var numeroSorteado = pad(Math.floor(Math.random() * 10000), 4);
+                } while (numerosSorteados.includes(numeroSorteado));
+
+                numerosSorteados.push(numeroSorteado);
+            }
+
+            // Redirecione para outra página
+            window.location.href = 'processar_sorteio.html';
+        }
+
+        // Função para padronizar os números com zeros à esquerda
+        function pad(num, size) {
+            var s = num + "";
+            while (s.length < size) s = "0" + s;
+            return s;
+        }
+    </script>
 </body>
 </html>
+
